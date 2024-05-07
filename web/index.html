@@ -64,6 +64,14 @@
             left: -65%;
             animation: 1s blink infinite ease-in-out;
         }
+
+        &.true{
+            color: var(--green)
+        }
+
+        &.false{
+            color: var(--red)
+        }
     }
 
     @keyframes blink {
@@ -143,10 +151,39 @@
 
     function initEvents()
     {
-        
+        document.addEventListener('keydown', () => {
+            $input.focus()
+        })
+
+        $input.addEventListener('keydown', onKeyDown)
+        $input.addEventListener('keyup', onKeyUp)
+    }
+    
+    function onKeyDown () {}
+    
+    function onKeyUp () {
+        const $currentWord = $paragraph.querySelector('x-word.active')
+        const $currentLetter = $currentWord.querySelector('x-letter.active')
+
+        const currentWord = $currentWord.innerText.trim()
+        $input.maxLength = currentWord.length
+        console.log({value: $input.value, currentWord})
+
+        const $allLetters = $currentWord.querySelectorAll('x-letter')
+
+        $allLetters.forEach($letter => $letter.classList.remove('true', 'false'))
+
+        $input.value.split('').forEach((char, index) => {
+            const $letter = $allLetters[index]
+            const letterToCheck = currentWord[index]
+
+            const isCorrect = char == letterToCheck
+            const letterClass = isCorrect ? 'true' : 'false'
+            $letter.classList.add(letterClass)
+        })
     }
 
-    function GameOver()
+    function GameOver ()
     {
         console.log('Game Over')
     }

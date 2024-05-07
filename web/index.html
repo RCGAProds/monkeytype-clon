@@ -99,11 +99,27 @@
             </x-word>
             `
         }).join('')
+
+        const intervalId = setInterval(() => {
+            currentTime--
+            $time.textContent = currentTime
+
+            if (currentTime == 0){
+                clearInterval(intervalId)
+                GameOver()
+            }
+
+        }, 1000)
     }
 
     function initEvents()
     {
         
+    }
+
+    function GameOver()
+    {
+        console.log('Game Over')
     }
 
 </script>

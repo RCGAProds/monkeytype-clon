@@ -60,7 +60,7 @@
         &.active::before{
             content: '|';
             color: var(--yellow);
-            font-size: 14px;
+            font-size: 16px;
             position: absolute;
             left: -65%;
             animation: 1s blink infinite ease-in-out;
@@ -76,6 +76,15 @@
 
         &.false{
             color: var(--red)
+        }
+    }
+
+    x-word{
+        border-bottom: 1.5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+
+        &.marked{
+            border-color: var(--red);
         }
     }
 
@@ -175,13 +184,18 @@
             const $nextWord = $currentWord.nextElementSibling
             const $nextLetter = $nextWord.querySelector('x-letter')
 
-            $currentWord.classList.remove('active')
+            $currentWord.classList.remove('active', 'marked')
             $currentLetter.classList.remove('active')
 
             $nextWord.classList.add('active')
             $nextLetter.classList.add('active')
 
             $input.value = ''
+
+            const hasMissedLetters = $currentWord.querySelectorAll('x-letter:not(.true)').length > 0
+
+            const classToAdd = hasMissedLetters ? 'marked' : 'true'
+            $currentWord.classList.add(classToAdd)
         }
     }
     

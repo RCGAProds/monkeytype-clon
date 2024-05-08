@@ -235,7 +235,7 @@
         })
 
         $input.addEventListener('keydown', onKeyDown)
-        $input.addEventListener('keyup', onKeyUp)
+        $input.addEventListener('input', onInput)
         $button.addEventListener('click', initGame)
     }
     
@@ -296,7 +296,7 @@
         }
     }
     
-    function onKeyUp () {
+    function onInput () {
         const $currentWord = $paragraph.querySelector('x-word.active')
         const $currentLetter = $currentWord.querySelector('x-letter.active')
 

@@ -56,6 +56,7 @@
         color: var(--gray);
         position: relative;
 
+        /*Selector*/
         &.active::before{
             content: '|';
             color: var(--yellow);
@@ -63,6 +64,10 @@
             position: absolute;
             left: -65%;
             animation: 1s blink infinite ease-in-out;
+        }
+
+        &.active.is-last::before{
+            left: 65%;
         }
 
         &.true{
@@ -159,7 +164,26 @@
         $input.addEventListener('keyup', onKeyUp)
     }
     
-    function onKeyDown () {}
+    function onKeyDown (event) {
+        const $currentWord = $paragraph.querySelector('x-word.active')
+        const $currentLetter = $currentWord.querySelector('x-letter.active')
+
+        const { key } = event
+        if (key == ' '){
+            event.preventDefault()
+
+            const $nextWord = $currentWord.nextElementSibling
+            const $nextLetter = $nextWord.querySelector('x-letter')
+
+            $currentWord.classList.remove('active')
+            $currentLetter.classList.remove('active')
+
+            $nextWord.classList.add('active')
+            $nextLetter.classList.add('active')
+
+            $input.value = ''
+        }
+    }
     
     function onKeyUp () {
         const $currentWord = $paragraph.querySelector('x-word.active')
@@ -181,6 +205,18 @@
             const letterClass = isCorrect ? 'true' : 'false'
             $letter.classList.add(letterClass)
         })
+
+        $currentLetter.classList.remove('active', 'is-last')
+
+        const inputLength = $input.value.length
+        const $nextActiveLetter = $allLetters[inputLength]
+
+        if ($nextActiveLetter) {
+            $nextActiveLetter.classList.add('active')
+        }else{
+            $currentLetter.classList.add('active', 'is-last')
+            //GameOver
+        }
     }
 
     function GameOver ()

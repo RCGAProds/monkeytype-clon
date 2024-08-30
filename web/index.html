@@ -33,6 +33,8 @@
     }
 
     time{
+        display: grid;
+        place-content: center;
         color: var(--yellow)
     }
 
@@ -104,6 +106,7 @@
 
     #results{
         display: none;
+        text-align: center;
     }
 
     h2{
@@ -181,7 +184,7 @@
     const $accuracy = $results.querySelector('#results-accuracy')
     const $button = document.querySelector('#reload-button')
 
-    const INITIAL_TIME = 30;
+    const INITIAL_TIME = 1;
 
     let words = []
     let currentTime = INITIAL_TIME
